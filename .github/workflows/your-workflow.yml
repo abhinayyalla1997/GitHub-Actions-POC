@@ -37,5 +37,5 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
-        aws cloudfront create-invalidation --distribution-id https://d37p8hnpf8om39.cloudfront.net --paths "/*"
+        aws cloudfront create-invalidation --distribution-id d37p8hnpf8om39 --paths "/*"
 
