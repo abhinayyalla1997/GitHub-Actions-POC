@@ -72,4 +72,10 @@ The following bucket policy ensures the S3 content can only be accessed via Clou
         }
     ]
 }
+```
 
+---
+
+## Author and LinkedIn Profile:
+
+[Abhinay Yalla](https://www.linkedin.com/in/abhinay-yalla)
