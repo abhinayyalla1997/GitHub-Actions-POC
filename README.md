@@ -6,6 +6,8 @@ This project explains the **developer workflow** and **user workflow** for deplo
 
 ## Developer Workflow
 
+![aws_project drawio (2)](https://github.com/user-attachments/assets/6807b191-b328-48cb-b58f-b751bca94894)
+
 The following steps describe the **developer process** for deploying the application:
 
 1. **Code Push**  
