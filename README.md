@@ -29,6 +29,8 @@ The following steps describe the **developer process** for deploying the applica
 
 ## User Workflow
 
+![usrworkflow](https://github.com/user-attachments/assets/48c98bd2-cf4f-4f4b-972a-2a01db43ea16)
+
 The following steps describe how **end users** access the application:
 
 1. **Accessing the Application**  
