@@ -75,6 +75,9 @@ The following bucket policy ensures the S3 content can only be accessed via Clou
 
 ---
 
-## Author and LinkedIn Profile:
 
-[Abhinay Yalla](https://www.linkedin.com/in/abhinay-yalla)
+### Key Points:
+- The **S3 Bucket Policy** is in a code block (triple backticks) to keep it formatted as code.
+- The **Author and LinkedIn Profile** section is placed outside the code block and written as a clickable markdown link: `[LinkedIn profile](https://www.linkedin.com/in/abhinay-yalla)`.
+  
+This will ensure that your LinkedIn profile appears as a clickable link and is clearly separated from the S3 bucket policy.
