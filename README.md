@@ -1,70 +1,81 @@
-# Getting Started with Create React App
+# React Application Deployment Using AWS S3 and CloudFront
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project explains the **developer workflow** and **user workflow** for deploying a React application using AWS services like S3, CloudFront, IAM, and Lambda.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Developer Workflow
 
-### `npm start`
+![aws_project drawio (2)](https://github.com/user-attachments/assets/6807b191-b328-48cb-b58f-b751bca94894)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The following steps describe the **developer process** for deploying the application:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. **Code Push**  
+   Developers write and push their code to the GitHub repository.
 
-### `npm test`
+2. **GitHub Actions**  
+   - GitHub Actions automatically trigger the deployment process.  
+   - The React code is built and deployed to an **S3 bucket**.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. **CloudFront Integration**  
+   - Content from the S3 bucket is served via **CloudFront** (a Content Delivery Network).  
+   - This ensures fast and secure delivery of the application.
 
-### `npm run build`
+4. **Cache Clearing with Lambda**  
+   - When new images or content are uploaded to the S3 bucket, an AWS **Lambda function** clears the CloudFront cache.  
+   - This ensures the updated content is displayed to users immediately.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## User Workflow
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![usrworkflow](https://github.com/user-attachments/assets/48c98bd2-cf4f-4f4b-972a-2a01db43ea16)
 
-### `npm run eject`
+The following steps describe how **end users** access the application:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. **Accessing the Application**  
+   Users visit the website through a custom domain (managed via **Route53**).
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. **Content Delivery**  
+   - Content is delivered using **CloudFront** for faster performance.  
+   - CloudFront fetches the content securely from the **S3 bucket**.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. **Viewing Updates**  
+   Any updates pushed by developers are immediately visible to users, as **Lambda** clears the CloudFront cache.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## S3 Bucket Policy
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The following bucket policy ensures the S3 content can only be accessed via CloudFront using **Origin Access Identity (OAI)**:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E3N8IEGFMS3GGU"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::my-reactdemo-bucket/*"
+        },
+        {
+            "Sid": "2",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E18DLEI46EW336"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::my-reactdemo-bucket/*"
+        }
+    ]
+}
+```
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Author and LinkedIn Profile:
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[Abhinay Yalla](https://www.linkedin.com/in/abhinay-yalla)
