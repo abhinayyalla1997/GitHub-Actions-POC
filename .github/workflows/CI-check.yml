@@ -1,0 +1,31 @@
+name: Backend CI
+
+on:
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  ci:
+    name: Validate & Test Backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Validate architecture
+        run: bun --bun scripts/validate-architecture.ts
+        
+      - name: Run tests
+        run: bun run test 
+
+
